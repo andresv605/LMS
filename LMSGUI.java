@@ -18,10 +18,7 @@ public class LMSGUI extends JFrame {
     }
 
     /**
-     * method: setupGUI
-     * parameters: none
-     * return: n/a
-     * purpose: Sets up the GUI layout, buttons, text areas, and labels for the LMS.
+     * Sets up the GUI layout, buttons, text areas, and labels for the LMS.
      */
     private void setupGUI() {
         setTitle("Library Management System");
@@ -77,10 +74,7 @@ public class LMSGUI extends JFrame {
     }
 
     /**
-     * method: updateBookTable
-     * parameters: none
-     * return: n/a
-     * purpose: Displays all books from the database in the display area.
+     * Displays all books from the database in the display area.
      */
     private void updateBookTable() {
         displayArea.setText("");
@@ -103,10 +97,7 @@ public class LMSGUI extends JFrame {
     }
 
     /**
-     * method: removeBookById
-     * parameters: none
-     * return: n/a
-     * purpose: Removes a book by its barcode from the database.
+     * Removes a book by its barcode from the database.
      */
     private void removeBookById() {
         String barcodeString = JOptionPane.showInputDialog(this, "Enter barcode to remove:");
@@ -135,10 +126,7 @@ public class LMSGUI extends JFrame {
     }
 
     /**
-     * method: removeBookByTitle
-     * parameters: none
-     * return: n/a
-     * purpose: Removes a book by its title from the database.
+     * Removes a book by its title from the database.
      */
     private void removeBookByTitle() {
         String title = JOptionPane.showInputDialog(this, "Enter title to remove:");
@@ -162,10 +150,7 @@ public class LMSGUI extends JFrame {
     }
 
     /**
-     * method: checkOutBook
-     * parameters: none
-     * return: n/a
-     * purpose: Updates the book's status to "checked out" and sets a due date.
+     * Updates the book's status to "checked out" and sets a due date.
      */
     private void checkOutBook() {
         String title = JOptionPane.showInputDialog(this, "Enter title to check out:");
@@ -189,10 +174,7 @@ public class LMSGUI extends JFrame {
     }
 
     /**
-     * method: checkInBook
-     * parameters: none
-     * return: n/a
-     * purpose: Updates the book's status to "checked in" and clears the due date.
+     * Updates the book's status to "checked in" and clears the due date.
      */
     private void checkInBook() {
         String title = JOptionPane.showInputDialog(this, "Enter title to check in:");

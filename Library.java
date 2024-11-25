@@ -2,69 +2,108 @@ package cen3024c;
 /**
  * Andres Vega
  * CEN 3024 - Software Development 1
- * September 8, 2024
+ * November 17, 2024
  * Library.java
- * This class manages the collection adding books from a file, removing books, and listing the books.
+ * This class manages the collection adding books, removing books from ID or title, checking out/in, and listing the books.
  */
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Library {
     private List<Book> books;
 
-    //constructor
+
     public Library(){
         books = new ArrayList<>();
     }
 
     /**
-     * method: addBooksFromFile
-     * parameters: String filename
-     * return: n/a
-     * purpose: Reads text file and adds book to the collection
+     * Adds a book to the library collection.
+     *
+     * @param book the book to add
      */
-    public void addBooksFromFile(String filename) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))){
-            String line;
-            while ((line = br.readLine()) !=null) {
-                String[] details = line.split(",");
-                if(details.length == 3) {
-                    int id = Integer.parseInt(details[0].trim());
-                    String title = details[1].trim();
-                    String author = details[2].trim();
-                    books.add(new Book(id,title, author));
-                }
+    public void addBook(Book book){
+        books.add(book);
+    }
+
+    /**
+     * Removes a book with the specified ID from the library.
+     *
+     * @param id the ID of the book to remove
+     * @return true if the book was removed, false otherwise
+     */
+    public boolean removeBookById(int id){
+        Iterator<Book> iterator = books.iterator();
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            if (book.getId() == id) {
+                iterator.remove();
+                return true;
             }
-            System.out.println("Books added successfully from " + filename);
-        } catch (IOException e) {
-            System.out.println("Unable to read file: " + e.getMessage());
         }
+        return false;
+    }
+    /**
+     * Removes a book with the specified title from the library.
+     *
+     * @param title the title of the book to remove
+     * @return true if the book was removed, false otherwise
+     */
+    public boolean removeBookByTitle(String title){
+        Iterator<Book> iterator = books.iterator();
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                iterator.remove();
+                return true;
+
+            }
+        }
+        return false;
+    }
+    /**
+     * Checks out a book with the specified title from the library.
+     *
+     * @param title the title of the book to check out
+     * @return true if the book was successfully checked out, false otherwise
+     */
+    public boolean checkOutBook(String title){
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title.trim()) && !book.isCheckedOut()) {
+                book.checkOut();
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * method: removeBook
-     * parameters: int id
-     * return: n/a
-     * purpose: Removes book with matching ID
+     * Checks in a book with the specified title to the library.
+     *
+     * @param title the title of the book to check in
+     * @return true if the book was successfully checked in, false otherwise
      */
-    public void removeBook(int id) {
-        books.removeIf(book -> book.getId() == id);
-        System.out.println("Book with the ID " + id + " has been removed.");
+    public boolean checkInBook(String title){
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title.trim()) && book.isCheckedOut()) {
+                book.checkIn();
+                return true;
+            }
+        }
+        return false;
     }
 
+
     /**
-     * method: listBooks
-     * parameters: none
-     * return: n/a
-     * purpose: Lists books in the collection
+     * Prints the list of books in the library.
+     * If no books exist, a message indicating that is printed instead.
      */
-    public void listBooks(){
-        if (books.isEmpty()) {
+    public void printBooks(){
+        if(books.isEmpty()){
             System.out.println("There are no books in the library.");
-        } else {
+        } else{
+            System.out.println("The books in the library are: ");
             for (Book book : books){
                 System.out.println(book);
             }
